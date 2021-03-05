@@ -1,12 +1,12 @@
-sCAMfastNonNeg <- function(X, A, Sest, iter=1, r = 1, lambda = 0, eta = 100, 
+sCAMfastNonNeg <- function(X, A, Sest, iter=5, r = 1, lambda = 100, 
                            silent = FALSE, iteradmm=1000, eps = 1e-3, warm.start = NULL){
   require('nnls')
   require('corpcor')
   K <- nrow(Sest)
   L <- ncol(Sest)
   M <- nrow(X)
-  c <- 2*(lambda + r)
-  tau <- eta / r
+  c <- 2*(r)
+  tau <- lambda / r
   
   Si <- array(Sest, c(K, L, M))
   S0 <- matrix(c(t(Sest)), nrow=K * L, ncol=M)
@@ -29,7 +29,7 @@ sCAMfastNonNeg <- function(X, A, Sest, iter=1, r = 1, lambda = 0, eta = 100,
     
     V <- matrix(0, L * K, M)
     for(i in 1:M){
-      V[,i] = c(t(A[i,] * X[rep(i,K),] + 2 * lambda * Sest))
+      V[,i] = c(t(A[i,] * X[rep(i,K),]))
     }
     
     epPri <- Inf

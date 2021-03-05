@@ -2,14 +2,14 @@
 
 #input: 
 #Xn: observation mixture matrix (sample * gene)
-#Aest: estimated proporiton matrix from CAM (sample * subtype)
+#Aest: estimated proportion matrix from CAM (sample * subtype)
 #Sest: estimated subtype expression matrix from CAM (subtype * gene)
-#eta: eta parameter
+#lambda: lambda parameter
 #iteradmm: max iteration number in ADMM; larger value will cause longer running time 
 Xn <-
 Aest <-
 Sest <-
-eta <- 
+lambda <- 
 iteradmm <- 1000
 
 
@@ -18,11 +18,11 @@ iteradmm <- 1000
 source('sCAMfastNonNeg.R')
 
 
-rsCAM <- sCAMfastNonNeg(Xn, Aest, Sest, eta = eta, iteradmm=iteradmm, silent = T)
+rsCAM <- sCAMfastNonNeg(Xn, Aest, Sest, lambda = lambda, iteradmm=iteradmm, silent = T)
 
-# eta parameter decides the penalty term of nuclear norm minimization.
+# lambda parameter decides the penalty term of nuclear norm minimization.
 # It can be decided by cross-validation scheme.
-# From experience, large sample size need larger eta parameter.
+# From experience, large sample size need larger lambda parameter.
 
 
 Swest <- rsCAM$S #sample-wise expression
